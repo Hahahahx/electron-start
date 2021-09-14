@@ -1,23 +1,26 @@
-import { contextBridge, ipcRenderer } from "electron";
-import { WindowOpt } from "../../common/IpcEvent";
+import { contextBridge } from "electron";
+import {
+  getChildWindow,
+  getModal,
+  getWindow,
+  windowClose,
+  windowMax,
+  windowMin,
+} from "./function/window";
 
 const apiKey = "electron";
 /**
  * @see https://github.com/electron/electron/issues/21437#issuecomment-573522360
  */
+
 const api: ElectronApi = {
   versions: process.versions,
-  getModal: (route, options) => {
-    ipcRenderer.send(
-      WindowOpt.Modal,
-      JSON.stringify({
-        params: {
-          route,
-          options,
-        },
-      }),
-    );
-  },
+  getWindow,
+  getModal,
+  getChildWindow,
+  windowClose,
+  windowMax,
+  windowMin,
 };
 
 /**

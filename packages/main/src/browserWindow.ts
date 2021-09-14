@@ -27,6 +27,7 @@ export class BrowserWindow {
     this.window = new ElectronBrowserWindow({
       ...opt?.options,
       show: false, // 使用 'ready-to-show' 事件来处理打开窗体
+      frame: false,
       webPreferences: {
         preload: join(__dirname, "../../preload/dist/index.cjs"),
         contextIsolation: !isTestMode, // 非测试模式下 contextIsolation: true

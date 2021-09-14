@@ -5,7 +5,10 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "/@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@styles/*": ["./src/styles/*"]
     },
     "lib": ["ESNext", "dom", "dom.iterable"]
   },

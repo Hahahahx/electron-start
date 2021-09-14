@@ -1,3 +1,5 @@
+import { BrowserWindow as ElectronBrowserWindow } from "electron";
+
 const isTestMode = import.meta.env.MODE === "test";
 const isDevMode = import.meta.env.MODE === "development";
 const isProMode = import.meta.env.MODE === "production";
@@ -25,6 +27,31 @@ class PlatForm extends String {
 
 const platform = new PlatForm();
 
+const getWindow = (id: number): ElectronBrowserWindow | undefined => {
+  return ElectronBrowserWindow.getAllWindows().find((window) => {
+    return window.id == id;
+  });
+};
 
+const ipcReplyCurrentWindow = (
+  type: string,
+  sender: Electron.WebContents,
+  request: IpcRequest | undefined,
+  data: any,
+): void => {
+  let res = request?.responseChannel;
+  if (!res) {
+    res = type;
+  }
+  sender.send(res, data);
+};
 
-export { isDevMode, isTestMode, ViteDevServerUrl, isProMode, platform };
+export {
+  isDevMode,
+  isTestMode,
+  ViteDevServerUrl,
+  isProMode,
+  platform,
+  getWindow,
+  ipcReplyCurrentWindow,
+};

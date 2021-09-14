@@ -11,6 +11,7 @@ import path from "path";
 
 const PACKAGE_ROOT = __dirname;
 const rendererPath = join(PACKAGE_ROOT, "src")
+
 /**
  * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
@@ -20,7 +21,10 @@ const config = {
   root: PACKAGE_ROOT,
   resolve: {
     alias: {
-      "/@/": rendererPath + "/",
+      "@": rendererPath + "/",
+      "@assets": path.join(rendererPath, "..") + "/assets/",
+      "@styles": rendererPath + "/styles/",
+      "@hooks": rendererPath + "/hooks/",
     },
   },
   plugins: [
