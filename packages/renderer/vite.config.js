@@ -1,12 +1,16 @@
 /* eslint-env node */
 
-import {chrome} from '../../electron-vendors.config.json';
-import {join} from 'path';
-import {builtinModules} from 'module';
-import vue from '@vitejs/plugin-vue';
+import { chrome } from "../../electron-vendors.config.json";
+import { join } from "path";
+import { builtinModules } from "module";
+// import vue from '@vitejs/plugin-vue';
+import reactRefresh from "@vitejs/plugin-react-refresh";
+import vitePluginImp from "vite-plugin-imp";
+import { AutoRouterVitePlugin } from "ux-autoroute-plugin";
+import path from "path";
 
 const PACKAGE_ROOT = __dirname;
-
+const rendererPath = join(PACKAGE_ROOT, "src")
 /**
  * @type {import('vite').UserConfig}
  * @see https://vitejs.dev/config/
@@ -16,11 +20,27 @@ const config = {
   root: PACKAGE_ROOT,
   resolve: {
     alias: {
-      '/@/': join(PACKAGE_ROOT, 'src') + '/',
+      "/@/": rendererPath + "/",
     },
   },
-  plugins: [vue()],
-  base: '',
+  plugins: [
+    reactRefresh(),
+    AutoRouterVitePlugin({
+      pagePath: path.join(rendererPath, "pages"),
+      output: rendererPath,
+      filename: "router.ts",
+      defaultLazyImport: false,
+    }),
+    vitePluginImp({
+      libList: [
+        {
+          libName: "antd",
+          style: (name) => `antd/lib/${name}/style/index.css`,
+          libDirectory: "es",
+        },
+      ],
+    })],
+  base: "",
   server: {
     fs: {
       strict: true,
@@ -29,8 +49,8 @@ const config = {
   build: {
     sourcemap: true,
     target: `chrome${chrome}`,
-    outDir: 'dist',
-    assetsDir: '.',
+    outDir: "dist",
+    assetsDir: ".",
     terserOptions: {
       ecma: 2020,
       compress: {
@@ -42,6 +62,12 @@ const config = {
       external: [
         ...builtinModules,
       ],
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom"],
+          antd: ["antd"],
+        },
+      },
     },
     emptyOutDir: true,
     brotliSize: false,
