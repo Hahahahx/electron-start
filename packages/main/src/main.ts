@@ -91,11 +91,15 @@ export class Main {
         .whenReady()
         .then(() => import("electron-devtools-installer"))
         .then(({ default: installExtension, REACT_DEVELOPER_TOOLS }) =>
-          installExtension(REACT_DEVELOPER_TOOLS, {
-            loadExtensionOptions: {
-              allowFileAccess: true,
-            },
-          }),
+          installExtension(
+            REACT_DEVELOPER_TOOLS,
+            true,
+            //   {
+            //   loadExtensionOptions: {
+            //     allowFileAccess: true,
+            //   },
+            // }
+          ),
         )
         .catch((e) => console.error("Failed install extension:", e));
     }

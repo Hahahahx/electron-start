@@ -2,10 +2,17 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "preserveConstEnums": true,
     "paths": {
       "/@/*": ["./src/*"]
     }
   },
-  "files": ["src/*.ts", "types/*.ts", "../common/*.ts"],
-  "include": ["../../types/**/*.d.ts"]
+  // "files": [],
+  "include": [
+    "src/**/*.ts",
+    "types/**/*.ts",
+    "../common/**/*.ts",
+    "../../types/**/*.d.ts"
+  ],
+  "exclude": ["../../node_modules"]
 }

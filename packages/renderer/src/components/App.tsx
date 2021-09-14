@@ -10,7 +10,7 @@ export const App = () => {
     <>
       <button
         onClick={() => {
-          getModal();
+          getModal("login");
         }}
       >
         open
